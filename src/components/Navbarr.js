@@ -1,36 +1,39 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const NavBar=(props)=>{
-    let myStyle={
-        color:'#fff'
-    }
-        return (
-            <div>
-                <nav className="navbar fixed-top navbar-expand-lg ">
-                    <div className="container-fluid">
-                        <Link className="navbar-brand" to="/"style={{color:'#fff'}}>News<span>X</span></Link>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#navbarSupportedContent" 
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item"><Link className="nav-link" to="/business"style={myStyle}>Business</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/entertainment"style={myStyle}>Entertainment</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/general"style={myStyle}>General</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/health"style={myStyle}>Health</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/science"style={myStyle}>Science</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/sports"style={myStyle}>Sports</Link></li>
-                            <li className="nav-item"><Link className="nav-link" to="/technology"style={myStyle}>Technology</Link></li>
+const categories = [
+    { path: '/general', label: 'General' },
+    { path: '/business', label: 'Business' },
+    { path: '/entertainment', label: 'Entertainment' },
+    { path: '/health', label: 'Health' },
+    { path: '/science', label: 'Science' },
+    { path: '/sports', label: 'Sports' },
+    { path: '/technology', label: 'Technology' },
+];
 
-                        </ul>
-                        </div>
-                    </div>
-                    </nav>
+const NavBar = () => {
+    return (
+        <header className="top-nav">
+            <div className="brand-row">
+                <NavLink className="brand" to="/">
+                    News<span>X</span>
+                </NavLink>
+                <p className="brand-tag">Fresh headlines, mobile-first experience</p>
             </div>
-        )
-}
 
-export default NavBar
+            <nav className="category-nav" aria-label="News categories">
+                {categories.map((item) => (
+                    <NavLink
+                        key={item.path}
+                        to={item.path}
+                        className={({ isActive }) => `category-chip ${isActive ? 'active' : ''}`}
+                    >
+                        {item.label}
+                    </NavLink>
+                ))}
+            </nav>
+        </header>
+    );
+};
+
+export default NavBar;

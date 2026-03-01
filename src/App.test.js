@@ -1,8 +1,25 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+beforeEach(() => {
+  jest.spyOn(global, 'fetch').mockResolvedValue({
+    ok: true,
+    json: async () => ({
+      response: {
+        status: 'ok',
+        total: 0,
+        results: [],
+      },
+    }),
+  });
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+test('renders navbar brand', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByRole('link', { name: /news\s*x/i });
   expect(linkElement).toBeInTheDocument();
 });
